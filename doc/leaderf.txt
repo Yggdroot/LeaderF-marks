@@ -1,0 +1,23 @@
+*LeaderF-marks*
+
+INTRODUCTION~
+
+This plugin is an extension of LeaderF, it is used to navigate the marks.
+
+==============================================================================
+REQUIREMENTS~
+
+- vim7.4.330 or higher.
+- vim compiled with Python support, you can check by using `echo has('python')`
+  or `echo has('python3')` to see if the result is 1.
+==============================================================================
+OPTIONS~
+
+==============================================================================
+USAGE~
+
+:LeaderfMarks                                   *LeaderfMarks*
+    Launch LeaderF to navigate the marks.
+
+==============================================================================
+vim:tw=78:ts=4:ft=help:norl
