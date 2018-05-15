@@ -31,9 +31,6 @@ class MarksExplorer(Explorer):
     def getStlCurDir(self):
         return escQuote(lfEncode(os.getcwd()))
 
-    def isFilePath(self):
-        return False
-
 
 #*****************************************************
 # MarksExplManager
