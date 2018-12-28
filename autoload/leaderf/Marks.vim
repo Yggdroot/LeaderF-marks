@@ -27,8 +27,20 @@ function! leaderf#Marks#Maps()
     nnoremap <buffer> <silent> q             :exec g:Lf_py "marksExplManager.quit()"<CR>
     nnoremap <buffer> <silent> i             :exec g:Lf_py "marksExplManager.input()"<CR>
     nnoremap <buffer> <silent> <F1>          :exec g:Lf_py "marksExplManager.toggleHelp()"<CR>
+    if has_key(g:Lf_NormalMap, "Marks")
+        for i in g:Lf_NormalMap["Marks"]
+            exec 'nnoremap <buffer> <silent> '.i[0].' '.i[1]
+        endfor
+    endif
 endfunction
 
 function! leaderf#Marks#startExpl(win_pos, ...)
     call leaderf#LfPy("marksExplManager.startExplorer('".a:win_pos."')")
+endfunction
+
+function! leaderf#Marks#register(name)
+exec g:Lf_py "<< EOF"
+from leaderf.anyExpl import anyHub
+anyHub.addPythonExtension(vim.eval("a:name"), marksExplManager)
+EOF
 endfunction
