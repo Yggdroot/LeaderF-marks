@@ -17,12 +17,7 @@ class MarksExplorer(Explorer):
         pass
 
     def getContent(self, *args, **kwargs):
-        tmp = lfEval("@x")
-        lfCmd("redir @x")
-        lfCmd("silent marks")
-        result = lfEval("@x")
-        lfCmd("let @x = '%s'" % escQuote(tmp))
-        lfCmd("redir END")
+        result = lfEval("execute('marks', 'silent')")
         return result.splitlines()[2:]
 
     def getStlCategory(self):
@@ -80,6 +75,7 @@ class MarksExplManager(Manager):
         help.append('" v : open file under cursor in a vertically split window')
         help.append('" t : open file under cursor in a new tabpage')
         help.append('" i : switch to input mode')
+        help.append('" p : preview the result')
         help.append('" q : quit')
         help.append('" <F1> : toggle this help')
         help.append('" ---------------------------------------------------------')
@@ -99,6 +95,23 @@ class MarksExplManager(Manager):
         for i in self._match_ids:
             lfCmd("silent! call matchdelete(%d)" % i)
         self._match_ids = []
+
+    def _previewResult(self, preview):
+        if not self._needPreview(preview):
+            return
+
+        line = self._getInstance().currentLine
+        orig_pos = self._getInstance().getOriginalPos()
+        cur_pos = (vim.current.tabpage, vim.current.window, vim.current.buffer)
+
+        saved_eventignore = vim.options['eventignore']
+        vim.options['eventignore'] = 'BufLeave,WinEnter,BufEnter'
+        try:
+            vim.current.tabpage, vim.current.window = orig_pos[:2]
+            self._acceptSelection(line)
+        finally:
+            vim.current.tabpage, vim.current.window, vim.current.buffer = cur_pos
+            vim.options['eventignore'] = saved_eventignore
 
 
 #*****************************************************

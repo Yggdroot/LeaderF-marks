@@ -24,6 +24,7 @@ function! leaderf#Marks#Maps()
     nnoremap <buffer> <silent> x             :exec g:Lf_py "marksExplManager.accept('h')"<CR>
     nnoremap <buffer> <silent> v             :exec g:Lf_py "marksExplManager.accept('v')"<CR>
     nnoremap <buffer> <silent> t             :exec g:Lf_py "marksExplManager.accept('t')"<CR>
+    nnoremap <buffer> <silent> p             :exec g:Lf_py "marksExplManager._previewResult(True)"<CR>
     nnoremap <buffer> <silent> q             :exec g:Lf_py "marksExplManager.quit()"<CR>
     nnoremap <buffer> <silent> i             :exec g:Lf_py "marksExplManager.input()"<CR>
     nnoremap <buffer> <silent> <F1>          :exec g:Lf_py "marksExplManager.toggleHelp()"<CR>
