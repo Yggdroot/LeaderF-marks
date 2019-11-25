@@ -35,10 +35,6 @@ function! leaderf#Marks#Maps()
     endif
 endfunction
 
-function! leaderf#Marks#startExpl(win_pos, ...)
-    call leaderf#LfPy("marksExplManager.startExplorer('".a:win_pos."')")
-endfunction
-
 function! leaderf#Marks#register(name)
 exec g:Lf_py "<< EOF"
 from leaderf.anyExpl import anyHub

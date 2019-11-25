@@ -83,12 +83,26 @@ class MarksExplManager(Manager):
 
     def _afterEnter(self):
         super(MarksExplManager, self)._afterEnter()
-        id = int(lfEval('''matchadd('Lf_hl_marksTitle', '^mark line .*$')'''))
-        self._match_ids.append(id)
-        id = int(lfEval('''matchadd('Lf_hl_marksLineCol', '^\s*\S\+\s\+\zs\d\+\s\+\d\+')'''))
-        self._match_ids.append(id)
-        id = int(lfEval('''matchadd('Lf_hl_marksText', '^\s*\S\+\s\+\d\+\s\+\d\+\s*\zs.*$')'''))
-        self._match_ids.append(id)
+        if self._getInstance().getWinPos() == 'popup':
+            lfCmd("""call win_execute(%d, 'let matchid = matchadd(''Lf_hl_marksTitle'', ''^mark line .*$'')')"""
+                    % self._getInstance().getPopupWinId())
+            id = int(lfEval("matchid"))
+            self._match_ids.append(id)
+            lfCmd("""call win_execute(%d, 'let matchid = matchadd(''Lf_hl_marksLineCol'', ''^\s*\S\+\s\+\zs\d\+\s\+\d\+'')')"""
+                    % self._getInstance().getPopupWinId())
+            id = int(lfEval("matchid"))
+            self._match_ids.append(id)
+            lfCmd("""call win_execute(%d, 'let matchid = matchadd(''Lf_hl_marksText'', ''^\s*\S\+\s\+\d\+\s\+\d\+\s*\zs.*$'')')"""
+                    % self._getInstance().getPopupWinId())
+            id = int(lfEval("matchid"))
+            self._match_ids.append(id)
+        else:
+            id = int(lfEval('''matchadd('Lf_hl_marksTitle', '^mark line .*$')'''))
+            self._match_ids.append(id)
+            id = int(lfEval('''matchadd('Lf_hl_marksLineCol', '^\s*\S\+\s\+\zs\d\+\s\+\d\+')'''))
+            self._match_ids.append(id)
+            id = int(lfEval('''matchadd('Lf_hl_marksText', '^\s*\S\+\s\+\d\+\s\+\d\+\s*\zs.*$')'''))
+            self._match_ids.append(id)
 
     def _beforeExit(self):
         super(MarksExplManager, self)._beforeExit()
