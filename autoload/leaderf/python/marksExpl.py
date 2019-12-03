@@ -33,7 +33,6 @@ class MarksExplorer(Explorer):
 class MarksExplManager(Manager):
     def __init__(self):
         super(MarksExplManager, self).__init__()
-        self._match_ids = []
 
     def _getExplClass(self):
         return MarksExplorer
@@ -106,9 +105,6 @@ class MarksExplManager(Manager):
 
     def _beforeExit(self):
         super(MarksExplManager, self)._beforeExit()
-        for i in self._match_ids:
-            lfCmd("silent! call matchdelete(%d)" % i)
-        self._match_ids = []
 
     def _previewResult(self, preview):
         if not self._needPreview(preview):

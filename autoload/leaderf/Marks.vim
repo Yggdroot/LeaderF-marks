@@ -35,9 +35,6 @@ function! leaderf#Marks#Maps()
     endif
 endfunction
 
-function! leaderf#Marks#register(name)
-exec g:Lf_py "<< EOF"
-from leaderf.anyExpl import anyHub
-anyHub.addPythonExtension(vim.eval("a:name"), marksExplManager)
-EOF
+function! leaderf#Marks#managerId()
+    return pyxeval("id(marksExplManager)")
 endfunction

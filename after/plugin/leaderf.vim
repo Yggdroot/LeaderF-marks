@@ -12,7 +12,7 @@
 let s:extension = {
             \   "name": "marks",
             \   "help": "navigate the marks",
-            \   "registerFunc": "leaderf#Marks#register",
+            \   "manager_id": "leaderf#Marks#managerId",
             \   "arguments": [
             \   ]
             \ }
