@@ -36,5 +36,10 @@ function! leaderf#Marks#Maps()
 endfunction
 
 function! leaderf#Marks#managerId()
-    return pyxeval("id(marksExplManager)")
+    " pyxeval() has bug
+    if g:Lf_PythonVersion == 2
+        return pyeval("id(marksExplManager)")
+    else
+        return py3eval("id(marksExplManager)")
+    endif
 endfunction

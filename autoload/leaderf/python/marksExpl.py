@@ -106,6 +106,20 @@ class MarksExplManager(Manager):
     def _beforeExit(self):
         super(MarksExplManager, self)._beforeExit()
 
+    def _previewInPopup(self, *args, **kwargs):
+        if len(args) == 0:
+            return
+
+        line = args[0]
+        cmd = "silent! norm! `" + line.split(None, 1)[0]
+
+        saved_eventignore = vim.options['eventignore']
+        vim.options['eventignore'] = 'BufWinEnter'
+        try:
+            self._createPopupPreview("", self._getInstance().getOriginalPos()[2].number, 0, jump_cmd=cmd)
+        finally:
+            vim.options['eventignore'] = saved_eventignore
+
 
 #*****************************************************
 # marksExplManager is a singleton
